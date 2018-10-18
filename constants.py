@@ -6,26 +6,26 @@ WINDOW_HEIGHT = WINDOW_WIDTH + SPRITE_SIZE
 
 maze_structure = "maze_structure.txt"
 
-mac_sprite = "player.png"
-guardian_sprite = "guardian.png"
-blood_sprite = "blood.png"
+mac_sprite = "resources/player.png"
+guardian_sprite = "resources/guardian.png"
+blood_sprite = "resources/blood.png"
 
-wall_sprite = "wall.png"
-floor_sprite = "floor.png"
-start_sprite = "start.png"
-exit_sprite = "exit_stairs.png"
-bottom_frame_sprite = "bottom_frame_sprite.png"
+wall_sprite = "resources/wall.png"
+floor_sprite = "resources/floor.png"
+start_sprite = "resources/start.png"
+exit_sprite = "resources/exit_stairs.png"
+bottom_frame_sprite = "resources/bottom_frame_sprite.png"
 
-tube_sprite = "tube.png"
-needle_sprite = "needle.png"
-ether_sprite = "ether.png"
+tube_sprite = "resources/tube.png"
+needle_sprite = "resources/needle.png"
+ether_sprite = "resources/ether.png"
 
-tube_icon = "tube_icon.png"
-needle_icon = "needle_icon.jpg"
-ether_icon = "ether_icon.png"
-syringe_icon = "syringe_icon.png"
+tube_icon = "resources/tube_icon.png"
+needle_icon = "resources/needle_icon.jpg"
+ether_icon = "resources/ether_icon.png"
+syringe_icon = "resources/syringe_icon.png"
 
-victory = "victory_picture.jpeg"
+victory = "resources/victory_picture.jpeg"
 
 
 def pix_coor_converter(coor):

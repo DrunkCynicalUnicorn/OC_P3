@@ -1,7 +1,9 @@
-from classes import *
-from constants import *
+from classes import Maze, Guardian, MacGyver, Items
+from constants import WINDOW_WIDTH, WINDOW_HEIGHT,\
+     tube_sprite, needle_sprite, ether_sprite, victory
 import pygame
-import sys
+from pygame.locals import QUIT, KEYDOWN, K_UP, K_DOWN, K_LEFT, K_RIGHT, K_q
+from sys import exit
 
 
 window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -16,7 +18,7 @@ def main():
     maze = Maze()
 
     hero = MacGyver()
-    guardian = Character()
+    guardian = Guardian()
 
     needle = Items("needle", needle_sprite)
     plastic_tube = Items("plastic_tube", tube_sprite)
@@ -35,21 +37,31 @@ def main():
             if event.type == KEYDOWN:
                 if event.key == K_LEFT:
                     hero.position = hero.move("left", maze,
-                                              Items.items_position_list, guardian,
-                                              needle, plastic_tube, ether_bottle)
+                                              Items.items_position_list,
+                                              guardian, needle,
+                                              plastic_tube, ether_bottle)
                 if event.key == K_RIGHT:
                     hero.position = hero.move("right", maze,
-                                              Items.items_position_list, guardian,
-                                              needle, plastic_tube, ether_bottle)
+                                              Items.items_position_list,
+                                              guardian, needle,
+                                              plastic_tube, ether_bottle)
                 if event.key == K_UP:
-                    hero.position = hero.move("up", maze, Items.items_position_list, guardian, needle, plastic_tube, ether_bottle)
+                    hero.position = hero.move("up", maze,
+                                              Items.items_position_list,
+                                              guardian, needle,
+                                              plastic_tube, ether_bottle)
                 if event.key == K_DOWN:
-                    hero.position = hero.move("down", maze, Items.items_position_list, guardian, needle, plastic_tube, ether_bottle)
+                    hero.position = hero.move("down", maze,
+                                              Items.items_position_list,
+                                              guardian, needle,
+                                              plastic_tube, ether_bottle)
 
             if event.type == QUIT:
-                sys.exit()
-        maze.display_maze(window, guardian, hero, needle, plastic_tube, ether_bottle)
-        maze.display_border(window, hero, needle, plastic_tube, ether_bottle)
+                exit()
+        maze.display_maze(window, guardian, hero, needle,
+                          plastic_tube, ether_bottle)
+        maze.display_border(window, hero, needle,
+                            plastic_tube, ether_bottle)
         pygame.display.flip()
 
         if maze[hero.position[0], hero.position[1]] == "O" or not hero.state:
@@ -57,8 +69,9 @@ def main():
 
     while True:
         for event in pygame.event.get():
-            if event.type == QUIT or event.type == KEYDOWN and event.key == K_q:
-                sys.exit()
+            if event.type == QUIT or event.type == KEYDOWN and \
+                    event.key == K_q:
+                exit()
             if event.type == KEYDOWN:
                 main()
 

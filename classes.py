@@ -1,6 +1,8 @@
-from constants import *
+from constants import SPRITE_SIZE, NUM_SPRITE, WINDOW_WIDTH, WINDOW_HEIGHT,\
+     maze_structure, mac_sprite, guardian_sprite, blood_sprite, wall_sprite,\
+     floor_sprite, start_sprite, exit_sprite, bottom_frame_sprite,\
+     tube_icon, needle_icon, ether_icon, syringe_icon, pix_coor_converter
 import pygame
-from pygame.locals import *
 from random import randrange
 
 
@@ -92,11 +94,12 @@ class Maze:
                                                       SPRITE_SIZE))
 
             if hero.inventory["syringe"]:
+                self.display_border(window, hero, *items, activate=False)
                 window.blit(self.syringe_icon, (SPRITE_SIZE*7,
                                                 NUM_SPRITE * SPRITE_SIZE))
 
 
-class Character:
+class Guardian:
 
     def __init__(self):
         self.position = [NUM_SPRITE - 2, NUM_SPRITE - 2]
@@ -136,7 +139,7 @@ class MacGyver:
     def pick_item(self, move_on_item, items_position_list, *items):
 
         """ Not designed to be called in main(), this func manages the situation
-        of MacGyver moving on an item spot, and by the way picking it up.
+        of MacGyver moving on an item spot and picking it up.
         As Items class objects attributes edition is not available from here,
         it calls a dedicated instance method of this last class to deal with
         the particular item's state concerned.
