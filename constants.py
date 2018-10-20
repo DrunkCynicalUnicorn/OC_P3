@@ -29,4 +29,9 @@ victory = "resources/victory_picture.jpeg"
 
 
 def pix_coor_converter(coor):
+
+    """ this function is a converter from indexes to
+    pixels coordinates, based on the size of a sprite
+    """
+
     return coor * SPRITE_SIZE

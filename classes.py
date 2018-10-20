@@ -8,6 +8,9 @@ from random import randrange
 
 class Maze:
 
+    """ class defining the structure and shape of the maze, and theres
+    corresponding sprites """
+
     def __init__(self):
         self.size = NUM_SPRITE
         self.structure = self.get_maze_structure(maze_structure)
@@ -41,12 +44,19 @@ class Maze:
 
     def get_maze_structure(self, maze_file):
 
-        """ func grabbing the maze structure from a file in local directory """
+        """ func grabbing the maze structure from a file in local directory.
+        Takes only one parameter : the path of this text file, stored in a
+        variable defined in constants.py """
 
         with open(maze_file, "r") as structure_reader:
             return structure_reader.read().splitlines()
 
     def display_maze(self, window, *chars_and_items):
+
+        """ function displaying the strictly maze part of the screen.
+        Parameters expected are the display Surface object and all
+        characters and items of the game """
+
         for y, line in enumerate(self.structure):
             for x, char in enumerate(line):
                 if char == "w":
@@ -74,6 +84,15 @@ class Maze:
                              pix_coor_converter(self.death_position[0])))
 
     def display_border(self, window, hero, *items, activate=True):
+
+        """ function displaying a border bottom frame, designed to display
+        actual picked item, and the special item "syringe" if conditions
+        are completed.
+        Parameters expected are the display Surface object, the hero object,
+        all the item, which means all instances of Items'class. There's also
+        one default parameter, which has a default value not designed to be
+        modified by client, whose only utility is intern """
+
         for i in range(0, WINDOW_WIDTH, SPRITE_SIZE):
             window.blit(self.border_sprite, (i, WINDOW_HEIGHT - SPRITE_SIZE))
 
@@ -101,6 +120,11 @@ class Maze:
 
 class Guardian:
 
+    """ class defining the Guardian object and his 3 attributes :
+            - a fixed start position
+            - a sprite
+            - a state, which is a bool value """
+
     def __init__(self):
         self.position = [NUM_SPRITE - 2, NUM_SPRITE - 2]
         self.sprite = pygame.image.load(guardian_sprite).convert_alpha()
@@ -108,6 +132,15 @@ class Guardian:
 
 
 class MacGyver:
+
+    """ class defining the attributes of the hero (player) and his
+    several methods. Attributes are :
+            - a position, with a default value to start the game
+            - a sprite
+            - a state, which is a bool value
+            - an inventory, a dict containing the four actual items
+                as keys, whoses values are bool
+    No parameters expected at object's creation """
 
     def __init__(self):
         self.position = [1, 1]
@@ -118,6 +151,21 @@ class MacGyver:
 
     def move(self, direction, maze_structure, items_position_list,
              enemy, *items):
+
+        """ func designed to handle a keyboard event corresponding to
+        a move. If the desired move doesn't engage any particular context,
+        the function returns the new position to be displayed. Else, it
+        sends the desired move to another specific function designed to deal
+        with this particular context (pick item, move on guardian).
+        Expected parameters are :
+            - direction of the move, defined by the key's event
+            - the maze structure
+            - the list of remaining items' position, which is a Items' class
+                var
+            - the guardian object
+            - all the items, stored by the function in a list in order to
+                iterate easily on them """
+
         if direction == "right":
             desired_move = [self.position[0], self.position[1] + 1]
         elif direction == "left":
@@ -146,7 +194,7 @@ class MacGyver:
 
         This function also has an automatic processing of Mac's inventory
         that generates the item "syringe" when the three required items,
-        ie  the 3 Items class objects are all picked up """
+        ie the 3 Items class objects are all picked up """
 
         item_counter = 0
         for item in items:
@@ -175,6 +223,20 @@ class MacGyver:
 
 
 class Items:
+
+    """ class defining the 3 different items of the game, which are to be objects
+     of this class. Theses objects are to have 4 attributes :
+            - name, only used in interaction with hero's inventory, and which
+                is an expected parameter of the constructor
+            - sprite, whose name, defined in constants.py, is expected in arg
+                in the constructor method
+            - state, initially set to True, that means the item is on the
+            ground, and so must be displayed until it's picked up and it's bool
+                    value goes to 0
+            - position, which is randomly chosen by a class method
+    There's also a class var, called items_position_list, which is to store all
+    remaining on the ground objects' position, to easily iterate on all
+    items position when needed """
 
     items_position_list = list()
 
@@ -205,7 +267,7 @@ class Items:
     def actualize_picked_item(self):
 
         """ not designed to be called in game, but only by the Mac's
-        class method "pick_item", this func handle the state change
+        class method "pick_item", this func handles the state change
         of items when they are picked up, and removes their coordinates
         from the class var list which contains all coordinates """
 
